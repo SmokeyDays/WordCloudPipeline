@@ -53,11 +53,15 @@ def add_words(words):
 
 def remap_translation(raw_translation):
     adhoc_translation = {
-        '阿银': "Ginchyan",
+        '阿银': "GinSan",
         "呱太": "Gekota",
         "黑子": "Kuroko",
         "神乐": "Kagura",
         "攘夷": "Jyoui",
+        "攘夷战争": "Jyoui War",
+        "婆婆": "Babaa",
+        "登势婆婆": "OtoseBabaa",
+        "登势": "Otose",
         "新八": "Shinpachi",
         "圣杯": "Holy Grail",
         "万事屋": "Yorozuya",
@@ -133,6 +137,7 @@ def create_wordcloud_with_translation(name, text):
         prefer_horizontal=0.95, # 尽量让词语水平排列
         # collocations=False to avoid grouping words
         collocations=False,
+        colormap='winter',
         stopwords=stopwords
     ).generate_from_frequencies(dict(new_top_words))
 
