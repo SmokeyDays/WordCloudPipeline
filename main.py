@@ -18,10 +18,11 @@ ADHOCWORDS_PATH = './special_words/adhocwords.txt'
 
 # 2. ！！！【重要】请务必设置正确的中文字体路径！！！
 #    - Windows: 'C:/Windows/Fonts/msyh.ttc' (微软雅黑) or 'C:/Windows/Fonts/simhei.ttf' (黑体)
+#    - Windows: 'C:/Windows/Fonts/STXINWEI.ttf
 #    - macOS: '/System/Library/Fonts/PingFang.ttc' (苹方)
 #    - Linux: '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc' (思源黑体)
 #    - 或者您下载的任何 .ttf/.otf 字体文件的路径
-FONT_PATH = 'C:/Windows/Fonts/msyh.ttc'  # <--- 修改这里
+FONT_PATH = 'C:/Windows/Fonts/STXINWEI.ttf'  # <--- 修改这里
 
 # 3. 设置词云参数
 MAX_WORDS = 100  # 词云中显示的最大词数
@@ -117,7 +118,7 @@ def create_wordcloud_with_translation(name, text):
 
     new_top_words = {}
     for item, value in dict(top_words).items():
-        new_item = item + ' ' + translations.get(item, "")
+        new_item = item + '' + translations.get(item, "")
         new_top_words[new_item] = value
 
     print(new_top_words)
@@ -147,7 +148,9 @@ def create_wordcloud_with_translation(name, text):
     print('display success!')
     
     # 保存词云图片
-    wc.to_file(f"./output/{name}.jpg")
+    svg_str = wc.to_svg()
+    with open(f"./output/{name}.svg", "w", encoding='utf-8') as f:
+        f.write(svg_str)
     return
 
     print("步骤 5: 使用 Matplotlib 绘制自定义词云...")
@@ -226,12 +229,14 @@ def work_with_batch():
             # if filename != "saber.txt":
             #     continue
             file_path = os.path.join(DATA_DIR, filename)
+            text = ""
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     text = f.read()
-                    create_wordcloud_with_translation(filename.replace(".txt", ""), text)
             except Exception as e:
                 print(f"读取文件 {filename} 失败: {e}")
+                continue
+            create_wordcloud_with_translation(filename.replace(".txt", ""), text)
     
     if not text:
         print("错误: 未能在 data 目录中找到任何文本内容。")
